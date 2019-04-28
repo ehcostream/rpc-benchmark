@@ -11,3 +11,4 @@ grpc/cmake_install.cmake
 grpc/server
 grpc/client
 grpc/*.pb.*
+grpc/*.o

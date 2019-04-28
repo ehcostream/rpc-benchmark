@@ -164,6 +164,6 @@ int main(int argc, char** argv)
     auto elaplsedTime = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
     std::cout << "elapsed time is " << elaplsedTime.count() << "us" << std::endl;
-    std::cout << "qps:" << FLAGS_concurrency_count / (elaplsedTime.count() / (1000 * 1000)) << std::endl;;
+    std::cout << "qps:" << (double)FLAGS_concurrency_count / ((double)elaplsedTime.count() / (1000 * 1000)) << std::endl;
     
 }
