@@ -44,9 +44,6 @@ static void* sender(void* arg)
 
         request.set_message(g_strRequest);
         cntl.set_log_id(log_id++);  // set by user
-
-        // Because `done'(last parameter) is NULL, this function waits until
-        // the response comes back or error occurs(including timedout).
         stub.Echo(&cntl, &request, &response, NULL);
         if (!cntl.Failed()) 
         {
@@ -57,11 +54,6 @@ static void* sender(void* arg)
             g_error_count << 1; 
             CHECK(brpc::IsAskedToQuit() || !FLAGS_dont_fail)
                 << "error=" << cntl.ErrorText() << " latency=" << cntl.latency_us();
-            // We can't connect to the server, sleep a while. Notice that this
-            // is a specific sleeping to prevent this thread from spinning too
-            // fast. You should continue the business logic in a production 
-            // server rather than sleeping.
-            //bthread_usleep(50000);
         }
     }
     return NULL;
@@ -134,7 +126,7 @@ int main(int argc, char** argv)
         }
 
         std::cout << "create thread Successfully" << std::endl;
-        //main thread will not exist until all child threads finished their.
+        //main thread will not exist until all child threads finished their task.
         for(int i = 0; i < FLAGS_thread_num; ++i)
         {
             if(!FLAGS_use_bthread)

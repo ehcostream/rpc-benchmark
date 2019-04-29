@@ -26,8 +26,8 @@ class EchoServiceImpl final : public EchoService::Service
     Status Echo(ServerContext* context, const EchoReq* request,
                     EchoRes* reply) override 
     {
-      reply->set_message(request->message());
-      return Status::OK;
+        reply->set_message(request->message());
+        return Status::OK;
     }
 };
 

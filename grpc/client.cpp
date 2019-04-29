@@ -31,24 +31,27 @@ DEFINE_int32(concurrency_count, 1000000, "Number of invoking the service");
 std::string g_strRequest;
 
 
-class TestClient {
- public:
-  TestClient(std::shared_ptr<Channel> channel)
+class TestClient 
+{
+public:
+    TestClient(std::shared_ptr<Channel> channel)
       : stub_(EchoService::NewStub(channel)) {}
-  void Echo() {
-    EchoReq request;
-    request.set_message(g_strRequest);
-    EchoRes reply;
-    ClientContext context;
-    Status status = stub_->Echo(&context, request, &reply);
-    if (!status.ok()) {
-      std::cout << status.error_code() << ": " << status.error_message()
-                << std::endl;
+    void Echo() 
+    {
+        EchoReq request;
+        request.set_message(g_strRequest);
+        EchoRes reply;
+        ClientContext context;
+        Status status = stub_->Echo(&context, request, &reply);
+        if (!status.ok()) 
+        {
+            std::cout << status.error_code() << ": " << status.error_message()
+                    << std::endl;
+        }
     }
-  }
 
- private:
-  std::unique_ptr<EchoService::Stub> stub_;
+private:
+    std::unique_ptr<EchoService::Stub> stub_;
 };
 
 static void* sender(void* arg)
@@ -83,9 +86,9 @@ int main(int argc, char** argv)
         {
             if(pthread_create(&pids[i], nullptr, sender, &client) != 0)
             {
-             oss << "Fail to create thread";
-             nError = 3;
-             break;
+                oss << "Fail to create thread";
+                nError = 1;
+                break;
             }
         }
 
